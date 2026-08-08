@@ -22,7 +22,7 @@ Self-paced, hands-on labs with production-grade microservices project. Designed 
 
 | Metric | Details |
 |--------|---------|
-| **Duration** | 9 weeks (12-15 hours/week) |
+| **Duration** | 9 weeks (12-14 hours/week) |
 | **Phases** | 7 progressive learning phases |
 | **Hands-On Labs** | 25+ real-world scenarios |
 | **Code Examples** | 50+ Kubernetes manifests |
