@@ -169,7 +169,7 @@ Not "hello-world" tutorials. Every example is production-grade:
 - Resource requests + limits
 - Health checks (liveness + readiness)
 - RBAC & security
-- Proper error handling
+- Proper error handling.
 
 ### **3. Real Microservices Project** (Phase 5)
 A 4-service application:
