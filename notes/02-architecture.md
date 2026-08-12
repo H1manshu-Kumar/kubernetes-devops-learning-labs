@@ -12,6 +12,8 @@
 
 ---
 
+<img width="1100" height="619" alt="k8s_architecture" src="https://github.com/user-attachments/assets/c932ae7d-f3e0-4847-a66b-ceea25128bc2" />
+
 ## Control Plane — Deep Dive
 
 The Control Plane is the brain of the cluster. It makes all the decisions.
