@@ -70,6 +70,11 @@ docker --version
 kind --version
 kubectl version --client
 ```
+<img width="384" height="40" alt="image" src="https://github.com/user-attachments/assets/7e9238ac-e9ff-4b96-ad22-18c266164479" />   
+
+<img width="211" height="41" alt="image" src="https://github.com/user-attachments/assets/b6acbe85-b6a0-4b5b-b5fb-cb16d144ed6c" />   
+
+<img width="1008" height="119" alt="image" src="https://github.com/user-attachments/assets/2b6b3272-53f0-434e-9f45-de0d2311acc1" />
 
 ---
 
@@ -122,6 +127,9 @@ This takes 1–2 minutes. KIND will:
 3. Bootstrap Kubernetes inside them
 4. Write credentials to `~/.kube/config` automatically
 
+<img width="807" height="248" alt="image" src="https://github.com/user-attachments/assets/08fa9b86-b6d7-411d-ba5a-5e75aa16ad6d" />
+
+
 ---
 
 ## Step 4 — Verify the Cluster
@@ -146,15 +154,18 @@ learning-cluster-worker          Ready    <none>          17m   v1.32.0
 learning-cluster-worker2         Ready    <none>          17m   v1.32.0
 learning-cluster-worker3         Ready    <none>          17m   v1.32.0
 ```
+All 4 nodes in `Ready` state = cluster is healthy.   
 
-All 4 nodes in `Ready` state = cluster is healthy.
+<img width="724" height="122" alt="image" src="https://github.com/user-attachments/assets/11ea8f8d-5b31-45ef-b299-8837598c39ec" />
 
 ```bash
 # Check system pods are all Running
 kubectl get pods -A
 ```
 
-You should see CoreDNS, kube-proxy, and the CNI pods all running. If any are in `Pending`, wait 30 seconds and re-run.
+You should see CoreDNS, kube-proxy, and the CNI pods all running. If any are in `Pending`, wait 30 seconds and re-run.   
+
+<img width="1112" height="328" alt="image" src="https://github.com/user-attachments/assets/daa65e01-fda2-4541-af8e-19779cc1df46" />
 
 ---
 
