@@ -1,7 +1,9 @@
+# kind cluster config - 1 control plane + 3 workers
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 
 nodes:
+# manages the cluster (scheduler, api server, etc.)
 - role: control-plane
   image: kindest/node:v1.32.0@sha256:c48c62eac5da28cdadcf560d1d8616cfa6783b58f0d94cf63ad1bf49600cb027
 
@@ -11,6 +13,7 @@ nodes:
 - role: worker
   image: kindest/node:v1.32.0@sha256:c48c62eac5da28cdadcf560d1d8616cfa6783b58f0d94cf63ad1bf49600cb027
 
+# this worker handles ingress traffic - ports 80/443 mapped to host
 - role: worker
   image: kindest/node:v1.32.0@sha256:c48c62eac5da28cdadcf560d1d8616cfa6783b58f0d94cf63ad1bf49600cb027
   extraPortMappings:
@@ -20,4 +23,3 @@ nodes:
   - containerPort: 443
     hostPort: 443
     protocol: TCP
-
