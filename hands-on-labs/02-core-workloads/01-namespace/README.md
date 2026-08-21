@@ -1,9 +1,9 @@
 # 🗂️ Kubernetes Namespaces — Deep Dive
 
-> **Lab Series:** Core Workloads → 01 Namespaces
-> **Difficulty:** Beginner → Intermediate
-> **Estimated Time:** 20–30 minutes
-> **Focus:** Master logical cluster isolation — from theory to hands-on to interview-ready
+> **Lab Series:** Core Workloads → 01 Namespaces   
+> **Difficulty:** Beginner → Intermediate   
+> **Estimated Time:** 20–30 minutes   
+> **Focus:** Master logical cluster isolation — from theory to hands-on to interview-ready   
 
 ---
 
@@ -453,6 +453,12 @@ Yes. That's one of the core benefits. Two teams can both have a `Deployment` nam
 ├── namespace.yml   ← Minimal namespace manifest
 └── README.md       ← This file
 ```
+
+---
+
+## ✍️ Author
+
+**[Himanshu Kumar](https://www.linkedin.com/in/h1manshu-kumar/)** - Learning by building, documenting, and sharing 🚀
 
 ---
 
