@@ -462,7 +462,13 @@ The Pod enters `Unknown` state. If the Pod is managed by a Deployment/ReplicaSet
 
 ---
 
+## ✍️ Author
+
+**[Himanshu Kumar](https://www.linkedin.com/in/h1manshu-kumar/)** - Learning by building, documenting, and sharing 🚀
+
+---
 <div align="center">
+
 
 **Built while learning Kubernetes hands-on.**
 *The best way to understand Pods is to break them, fix them, and break them again.*
