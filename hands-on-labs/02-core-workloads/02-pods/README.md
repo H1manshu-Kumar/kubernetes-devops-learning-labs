@@ -1,9 +1,9 @@
 # 🚀 Kubernetes Pods — Deep Dive
 
-> **Lab Series:** Core Workloads → 02 Pods
-> **Difficulty:** Beginner → Intermediate
-> **Estimated Time:** 30–45 minutes
-> **Focus:** Master the smallest deployable unit in Kubernetes — from theory to hands-on to interview-ready
+> **Lab Series:** Core Workloads → 02 Pods   
+> **Difficulty:** Beginner → Intermediate   
+> **Estimated Time:** 30–45 minutes   
+> **Focus:** Master the smallest deployable unit in Kubernetes — from theory to hands-on to interview-ready    
 
 ---
 
@@ -438,17 +438,6 @@ The Pod enters `Unknown` state. If the Pod is managed by a Deployment/ReplicaSet
 | No resource `requests` or `limits` | Pod can starve other workloads or get OOM-killed unpredictably | Always set both |
 | No liveness/readiness probes | Kubernetes can't detect a broken app | Add probes for production workloads |
 | Storing secrets in env vars directly | Secrets visible in Pod spec | Use Kubernetes `Secret` objects |
-
----
-
-## What's Next
-
-| Lab | Topic | Why It Matters |
-|---|---|---|
-| [03 — ReplicaSets](../03-replicasets/) | Ensure N copies of a Pod always run | Foundation of self-healing |
-| [04 — Deployments](../04-deployments/) | Rolling updates, rollbacks | How you run Pods in production |
-| [05 — Services](../05-services/) | Expose Pods to network traffic | Pods need Services to be reachable |
-| [06 — ConfigMaps & Secrets](../06-configmaps-secrets/) | Inject config and sensitive data | Decouple config from code |
 
 ---
 
