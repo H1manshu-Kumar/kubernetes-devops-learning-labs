@@ -1,9 +1,9 @@
 # 🚀 Kubernetes Deployments — Deep Dive
 
-> **Lab Series:** Core Workloads → 03 Deployment
-> **Difficulty:** Beginner → Intermediate
-> **Estimated Time:** 45–60 minutes
-> **Focus:** Master the most important Kubernetes workload controller — from theory to hands-on to interview-ready
+> **Lab Series:** Core Workloads → 03 Deployment    
+> **Difficulty:** Beginner → Intermediate    
+> **Estimated Time:** 45–60 minutes    
+> **Focus:** Master the most important Kubernetes workload controller — from theory to hands-on to interview-ready    
 
 ---
 
