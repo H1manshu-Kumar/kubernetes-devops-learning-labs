@@ -62,9 +62,9 @@ This is the most common point of confusion for beginners.
 │  │                   ReplicaSet                      │  │
 │  │  (Ensures N pods are always running)              │  │
 │  │                                                   │  │
-│  │   ┌─────────┐   ┌─────────┐   ┌─────────┐        │  │
-│  │   │  Pod 1  │   │  Pod 2  │   │  Pod 3  │        │  │
-│  │   └─────────┘   └─────────┘   └─────────┘        │  │
+│  │   ┌─────────┐   ┌─────────┐   ┌─────────┐         │  │
+│  │   │  Pod 1  │   │  Pod 2  │   │  Pod 3  │         │  │
+│  │   └─────────┘   └─────────┘   └─────────┘         │  │
 │  └───────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -79,11 +79,11 @@ A ReplicaSet controller runs a continuous reconciliation loop:
 
 ```
 ┌──────────────────────────────────────────────────────┐
-│              ReplicaSet Controller Loop               │
-│                                                       │
-│   Desired replicas: 2                                 │
-│   Actual running pods: ?                              │
-│                                                       │
+│              ReplicaSet Controller Loop              │
+│                                                      │
+│   Desired replicas: 2                                │
+│   Actual running pods: ?                             │
+│                                                      │
 │   actual < desired  →  Create new pods               │
 │   actual > desired  →  Delete excess pods            │
 │   actual == desired →  Do nothing                    │
@@ -182,6 +182,7 @@ spec:
 ```bash
 kubectl create namespace nginx
 ```
+<img width="618" height="46" alt="image" src="https://github.com/user-attachments/assets/4ae897d3-05dc-4846-b229-9b6aedab41ef" />
 
 ---
 
@@ -190,6 +191,7 @@ kubectl create namespace nginx
 ```bash
 kubectl apply -f replicasets.yml
 ```
+<img width="460" height="42" alt="image" src="https://github.com/user-attachments/assets/a8b12d08-c68d-40e7-9cd4-f768218e6a2a" />
 
 ---
 
@@ -213,6 +215,10 @@ nginx-replicasets  2         2         2       10s
 - `CURRENT: 2` → 2 pods exist
 - `READY: 2` → 2 pods are passing their readiness checks
 
+<img width="643" height="98" alt="image" src="https://github.com/user-attachments/assets/3b6fa2ae-18aa-4784-b42c-0d2a510b73c7" />    
+
+<img width="647" height="134" alt="image" src="https://github.com/user-attachments/assets/e416551d-5f26-42f3-9f2c-68c694438e49" />
+
 ---
 
 ### Step 4 — Inspect the ReplicaSet
@@ -224,6 +230,9 @@ kubectl describe replicaset nginx-replicasets -n nginx
 # See which node each pod landed on
 kubectl get pods -n nginx -o wide
 ```
+<img width="638" height="403" alt="image" src="https://github.com/user-attachments/assets/1be0368f-939c-4933-8c02-02ae63b2564e" />   
+
+<img width="1254" height="177" alt="image" src="https://github.com/user-attachments/assets/f507ffda-86d0-4b9f-963d-06c7eb313f27" />
 
 ---
 
@@ -241,6 +250,11 @@ kubectl delete pod nginx-replicasets-<hash> -n nginx
 # Watch it get recreated immediately
 kubectl get pods -n nginx -w
 ```
+<img width="734" height="100" alt="image" src="https://github.com/user-attachments/assets/ee60987b-d0f2-4830-8bc0-d717bcf35cfa" />    
+
+<img width="634" height="43" alt="image" src="https://github.com/user-attachments/assets/6a98140b-15db-438b-9e86-71e0aaaf7150" />   
+
+<img width="810" height="102" alt="image" src="https://github.com/user-attachments/assets/37c66c22-432a-4da4-a886-5a5abaecb6e1" />
 
 > 💡 This is the core value of a ReplicaSet. The controller detects actual (1) < desired (2) and creates a replacement Pod within seconds.
 
@@ -261,6 +275,13 @@ kubectl scale replicaset nginx-replicasets -n nginx --replicas=2
 # Watch excess pods get terminated
 kubectl get pods -n nginx -w
 ```
+<img width="898" height="41" alt="image" src="https://github.com/user-attachments/assets/b0d492d4-f818-4d22-bdf6-4d20ee740103" />    
+
+<img width="736" height="139" alt="image" src="https://github.com/user-attachments/assets/2785e1ca-4876-47f0-b607-1be1d9f37ee2" />    
+
+<img width="888" height="42" alt="image" src="https://github.com/user-attachments/assets/cbb4ef99-a0c1-4f59-a32c-1cd4e1ebb70d" />    
+
+<img width="768" height="82" alt="image" src="https://github.com/user-attachments/assets/ff69ad7e-4460-425c-9492-0d8b76ddc1b4" />    
 
 ---
 
@@ -275,6 +296,8 @@ kubectl run orphan-pod --image=nginx --labels="app=nginx" -n nginx
 # Check pod count — the RS will immediately terminate the extra pod
 kubectl get pods -n nginx
 ```
+
+
 
 > 💡 The ReplicaSet sees 3 pods matching its selector (desired: 2) and terminates one. It doesn't care that you created the pod manually — it only counts labels. This is the label selector mechanism in action.
 
