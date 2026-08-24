@@ -296,8 +296,7 @@ kubectl run orphan-pod --image=nginx --labels="app=nginx" -n nginx
 # Check pod count — the RS will immediately terminate the extra pod
 kubectl get pods -n nginx
 ```
-
-
+<img width="906" height="140" alt="image" src="https://github.com/user-attachments/assets/92f3c46f-3147-428b-9116-7c14239a0799" />
 
 > 💡 The ReplicaSet sees 3 pods matching its selector (desired: 2) and terminates one. It doesn't care that you created the pod manually — it only counts labels. This is the label selector mechanism in action.
 
