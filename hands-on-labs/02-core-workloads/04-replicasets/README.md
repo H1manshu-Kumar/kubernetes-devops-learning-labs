@@ -472,17 +472,6 @@ Rarely — but valid cases include: you need a fixed pod set with no update stra
 
 ---
 
-## What's Next
-
-Now that you understand ReplicaSets, the natural next steps are:
-
-- **Services** — Expose your ReplicaSet's Pods to network traffic (ClusterIP, NodePort, LoadBalancer)
-- **ConfigMaps & Secrets** — Inject configuration and credentials into your Pods
-- **HorizontalPodAutoscaler (HPA)** — Auto-scale based on CPU/memory metrics
-- **DaemonSets** — Like a ReplicaSet, but ensures exactly one Pod runs on every node (used for log collectors, monitoring agents)
-
----
-
 ## ✍️ Author
 
 **[Himanshu Kumar](https://www.linkedin.com/in/h1manshu-kumar/)** - Learning by building, documenting, and sharing 🚀
