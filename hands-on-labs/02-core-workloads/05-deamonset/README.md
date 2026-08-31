@@ -1,10 +1,9 @@
 # 👾 Kubernetes DaemonSets — Deep Dive
 
-> **Lab Series:** Core Workloads → 05 DaemonSet
-> **Difficulty:** Beginner → Intermediate
-> **Estimated Time:** 30–45 minutes
-> **Focus:** Understand what DaemonSets are, how they differ from ReplicaSets, and when to use them
-
+> **Lab Series:** Core Workloads → 05 DaemonSet    
+> **Difficulty:** Beginner → Intermediate    
+> **Estimated Time:** 30–45 minutes    
+> **Focus:** Understand what DaemonSets are, how they differ from ReplicaSets, and when to use them    
 ---
 
 ## 📌 Table of Contents
@@ -18,7 +17,6 @@
 7. [DaemonSets in Production — What Changes](#daemonsets-in-production--what-changes)
 8. [Interview Q&A — Straight to the Point](#interview-qa--straight-to-the-point)
 9. [Common Mistakes & Gotchas](#common-mistakes--gotchas)
-10. [What's Next](#whats-next)
 
 ---
 
@@ -177,6 +175,7 @@ spec:
 ```bash
 kubectl create namespace nginx
 ```
+<img width="478" height="58" alt="image" src="https://github.com/user-attachments/assets/e824e8ce-5043-490b-8d28-68ab3b2111e1" />
 
 ---
 
@@ -185,6 +184,7 @@ kubectl create namespace nginx
 ```bash
 kubectl apply -f DaemonSet.yml
 ```
+<img width="400" height="45" alt="image" src="https://github.com/user-attachments/assets/8d1a3bfc-6122-4f37-9736-937ac84d03ec" />
 
 ---
 
@@ -203,11 +203,14 @@ Expected output:
 NAME               DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
 nginx-daemonset    3         3         3       3            3           <none>          10s
 ```
+<img width="909" height="60" alt="image" src="https://github.com/user-attachments/assets/7a6e92c9-4524-4c28-951e-7dc07e8d8bf3" />
 
 - `DESIRED` → number of eligible nodes in your cluster
 - `CURRENT` → pods that exist
 - `READY` → pods passing readiness checks
 - `-o wide` shows which node each pod is running on — you'll see one pod per node
+
+<img width="1177" height="137" alt="image" src="https://github.com/user-attachments/assets/153cb1a1-1592-4434-8472-e120e47cc56e" /> </br>
 
 > 💡 Notice there is no `REPLICAS` column like in a ReplicaSet. The desired count is driven entirely by your node count.
 
@@ -228,6 +231,8 @@ In the `describe` output, pay attention to:
 - `Tolerations` — what taints the pods can tolerate
 - `Events` — shows pod creation events per node
 
+<img width="923" height="594" alt="image" src="https://github.com/user-attachments/assets/471212b0-861e-4cfa-a2ac-00dfca8332ea" /> </br>
+
 ---
 
 ### Step 5 — Test Self-Healing
@@ -244,6 +249,11 @@ kubectl delete pod nginx-daemonset-<hash> -n nginx
 # Watch it get recreated on the same node
 kubectl get pods -n nginx -w
 ```
+<img width="1177" height="137" alt="image" src="https://github.com/user-attachments/assets/0dc066cd-a8f2-4339-a067-2dac5e2f1997" /> </br>
+
+<img width="603" height="44" alt="image" src="https://github.com/user-attachments/assets/81590b9b-e872-46b8-8f47-5a6db1e2751d" /> </br>
+
+<img width="713" height="80" alt="image" src="https://github.com/user-attachments/assets/78bfbc91-917f-4292-aba7-c780c95fd30f" /> </br>
 
 > 💡 Unlike a ReplicaSet which reschedules the pod on *any* available node, a DaemonSet recreates the pod on the **same node** the deleted pod was on. The node still needs coverage.
 
@@ -260,6 +270,9 @@ kubectl get pods -n nginx -o wide
 # Confirm pod count matches node count
 kubectl get nodes
 ```
+<img width="1173" height="136" alt="image" src="https://github.com/user-attachments/assets/b9d597dc-05db-415e-b059-dfd8b80db0c9" />
+
+<img width="676" height="119" alt="image" src="https://github.com/user-attachments/assets/1e44922d-5842-44b1-bacc-76e761897c91" />
 
 The number of pods in the DaemonSet should exactly equal the number of `Ready` worker nodes.
 
@@ -487,17 +500,6 @@ By default, all pods owned by the DaemonSet are also deleted (cascade delete). U
 ├── DaemonSet.yml  ← Minimal nginx DaemonSet manifest (intentionally simple)
 └── README.md      ← This file
 ```
-
----
-
-## What's Next
-
-You've now covered:
-- ✅ Bare Pods
-- ✅ ReplicaSets — N copies, scheduler decides placement
-- ✅ DaemonSets — one pod per node, node-level workloads
-
-Next up: **Deployments** — which wrap ReplicaSets and add rolling updates, rollbacks, and revision history. Deployments are what you'll use for 90% of stateless workloads in production.
 
 ---
 
