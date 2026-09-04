@@ -241,6 +241,7 @@ The `schedule` field uses standard Unix cron syntax with 5 fields:
 ```bash
 kubectl create namespace nginx
 ```
+<img width="345" height="197" alt="image" src="https://github.com/user-attachments/assets/3c4dc55b-b2ff-458f-bfe1-5e5a41cc0c7a" />
 
 ---
 
@@ -249,6 +250,7 @@ kubectl create namespace nginx
 ```bash
 kubectl apply -f cron-job.yml
 ```
+<img width="388" height="45" alt="image" src="https://github.com/user-attachments/assets/410c037d-f361-45d2-9a1b-6520538fe44b" />
 
 ---
 
@@ -257,6 +259,7 @@ kubectl apply -f cron-job.yml
 ```bash
 kubectl get cronjob -n nginx
 ```
+<img width="784" height="63" alt="image" src="https://github.com/user-attachments/assets/3c859bd1-c601-43cf-98d2-c8a1190df519" />
 
 Expected output:
 ```
@@ -291,6 +294,8 @@ minute-backup-<timestamp>  1/1           8s         8s
 
 The pod will go through: `Pending → ContainerCreating → Running → Completed`
 
+<img width="784" height="100" alt="image" src="https://github.com/user-attachments/assets/b1edba7a-c4ed-46b4-807d-289d725463bb" />
+
 ---
 
 ### Step 5 — Inspect the CronJob and Job
@@ -310,6 +315,9 @@ Notice in the CronJob description:
 - `Last Schedule Time` — when the last Job was triggered
 - `Active Jobs` — Jobs currently running
 - `Events` — shows each time a Job was created
+<img width="1169" height="687" alt="image" src="https://github.com/user-attachments/assets/06ea98ac-47c0-409c-87f9-6838e900a06e" />
+
+<img width="1169" height="552" alt="image" src="https://github.com/user-attachments/assets/2ad6c82b-3b3a-4bc2-a6b5-fa652e4eaf76" />
 
 ---
 
@@ -328,6 +336,7 @@ Expected output:
 ====Backup Started====
 ====Backup Completed!====
 ```
+<img width="239" height="55" alt="image" src="https://github.com/user-attachments/assets/28f59724-72cf-426a-96b3-ea73dca8baa8" />
 
 > 💡 Even after the pod reaches `Completed` status, its logs remain accessible. This is how you verify each scheduled run executed correctly.
 
@@ -349,6 +358,7 @@ minute-backup-<timestamp-1>     1/1           6s         3m
 minute-backup-<timestamp-2>     1/1           5s         2m
 minute-backup-<timestamp-3>     1/1           7s         1m
 ```
+<img width="613" height="55" alt="image" src="https://github.com/user-attachments/assets/090e55d9-99e1-4eee-9dd2-7c482e34c219" />   
 
 ---
 
@@ -365,6 +375,11 @@ kubectl get cronjob -n nginx
 # Resume
 kubectl patch cronjob minute-backup -n nginx -p '{"spec":{"suspend":false}}'
 ```
+<img width="408" height="40" alt="image" src="https://github.com/user-attachments/assets/9c8cad89-670a-4c93-855a-4be72f70e9ee" />    
+
+<img width="631" height="38" alt="image" src="https://github.com/user-attachments/assets/53fae328-fd44-4555-98c2-14998c13e366" />   
+
+<img width="631" height="38" alt="image" src="https://github.com/user-attachments/assets/7202198b-56a8-48b8-b66f-946101d3bfac" />    
 
 > 💡 Suspending a CronJob is the clean way to pause scheduled runs without deleting the CronJob. Useful for maintenance windows or debugging.
 
@@ -394,6 +409,7 @@ kubectl delete cronjob minute-backup -n nginx
 # Or delete the namespace entirely
 kubectl delete namespace nginx
 ```
+<img width="487" height="36" alt="image" src="https://github.com/user-attachments/assets/da05b7f0-151d-41c0-a321-e5296cc48a3c" />
 
 ---
 
