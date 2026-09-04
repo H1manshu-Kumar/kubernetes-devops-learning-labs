@@ -61,7 +61,7 @@ A Job solves exactly this: **run one or more pods to successful completion, then
 │                                                              │
 │   ┌──────────┐   ┌──────────┐   ┌──────────┐                 │
 │   │  Pod 1   │   │  Pod 2   │   │  Pod 3   │                 │
-│   │ ✅ Done  │   │ ✅ Done  │   │ 🔄 Running│                │
+│   │ ✅ Done  │   │ ✅ Done  │   │🔄 Running│                 │
 │   └──────────┘   └──────────┘   └──────────┘                 │
 │                                                              │
 │   completions: 3 | parallelism: 2 | succeeded: 2             │
@@ -189,6 +189,7 @@ spec:
 ```bash
 kubectl create namespace nginx
 ```
+<img width="344" height="194" alt="image" src="https://github.com/user-attachments/assets/f97dd5a5-f979-4b5a-9aba-f56ecb4c85eb" />
 
 ---
 
@@ -197,6 +198,7 @@ kubectl create namespace nginx
 ```bash
 kubectl apply -f job.yml
 ```
+<img width="354" height="42" alt="image" src="https://github.com/user-attachments/assets/fa5f5d57-6f12-4b09-a9d7-6c91f8e55b42" />
 
 ---
 
@@ -225,6 +227,10 @@ demo-nginx-job   1/1           12s        20s
 - `COMPLETIONS: 1/1` → 1 successful completion out of 1 required — Job is done ✅
 - The pod status will show `Completed`, not `Running`
 
+<img width="507" height="60" alt="image" src="https://github.com/user-attachments/assets/cbbd704e-0ca3-4df1-b6d7-d6668161a080" /> </br>
+
+<img width="743" height="44" alt="image" src="https://github.com/user-attachments/assets/699dad91-e129-47e8-8233-9bfb0840e19e" />
+
 ---
 
 ### Step 4 — Inspect the Job and Pod
@@ -236,6 +242,9 @@ kubectl describe job demo-nginx-job -n nginx
 # Check pod status — it should be Completed, not Running
 kubectl get pods -n nginx
 ```
+<img width="731" height="651" alt="image" src="https://github.com/user-attachments/assets/2dfa60e6-3e83-4165-9eef-eb4ab919502b" />    
+
+<img width="742" height="42" alt="image" src="https://github.com/user-attachments/assets/3ae30586-b390-4e47-ba2f-a09e4dfa4e18" />
 
 Notice the pod status is `Completed` — this is unique to Jobs. A completed pod is not deleted automatically (by default) so you can inspect its logs.
 
@@ -255,6 +264,7 @@ Expected output:
 ```
 Hello DevOps World
 ```
+<img width="478" height="40" alt="image" src="https://github.com/user-attachments/assets/b73dcfa8-6861-4811-b366-07cff875cee4" />
 
 > 💡 This is the key difference from a Deployment. The pod is done and gone from `Running`, but its logs are still accessible. This is how you verify a batch job ran correctly.
 
@@ -286,6 +296,9 @@ EOF
 # Watch the Job create new pods on each retry
 kubectl get pods -n nginx -w
 ```
+<img width="398" height="328" alt="image" src="https://github.com/user-attachments/assets/ca9a58a4-bd7f-4891-bda2-aec5eaa62268" />
+
+<img width="812" height="545" alt="image" src="https://github.com/user-attachments/assets/e374f3e3-6db7-43fd-9b48-fba8eb768e1d" />
 
 You'll see multiple pods created — one per retry attempt. After `backoffLimit: 3` retries, the Job is marked `Failed`.
 
@@ -293,6 +306,7 @@ You'll see multiple pods created — one per retry attempt. After `backoffLimit:
 kubectl get job failing-job -n nginx
 # STATUS: Failed
 ```
+<img width="542" height="63" alt="image" src="https://github.com/user-attachments/assets/1bbca269-4f6f-4263-88d0-9eed540e6a0f" />
 
 ---
 
@@ -320,6 +334,7 @@ EOF
 # Watch 3 pods run simultaneously, then the next 3
 kubectl get pods -n nginx -w
 ```
+<img width="655" height="670" alt="image" src="https://github.com/user-attachments/assets/a4dc53cb-eae8-4f00-8042-0315083cc6dd" />    
 
 > 💡 With `completions: 6` and `parallelism: 3`, the Job runs 3 pods at a time, waits for them to complete, then runs the next 3 — until 6 total successes are recorded.
 
@@ -334,6 +349,7 @@ kubectl delete job demo-nginx-job failing-job parallel-job -n nginx
 # Or delete the namespace entirely
 kubectl delete namespace nginx
 ```
+<img width="508" height="90" alt="image" src="https://github.com/user-attachments/assets/a8925338-b8da-4766-bee6-672d8f2ae1da" />
 
 ---
 
