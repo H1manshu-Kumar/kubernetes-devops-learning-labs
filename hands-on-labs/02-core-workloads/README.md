@@ -1,6 +1,6 @@
 # Lab 02 — Core Kubernetes Workloads
 
-> **Week 2** | Namespaces, Pods, Deployments, Services, ConfigMaps, Secrets and more — the building blocks every Kubernetes engineer works with daily
+> **Week 2** | The foundational building blocks every Kubernetes engineer works with daily — from Namespaces to CronJobs
 
 ---
 
@@ -10,10 +10,11 @@
 |---|---|---|
 | 01 | **Namespaces** | Isolate workloads, scope resources, organise environments |
 | 02 | **Pods** | The smallest deployable unit — containers, ports, lifecycle |
-| 03 | **Deployments** *(coming soon)* | Declarative rollouts, scaling, self-healing |
-| 04 | **Services** *(coming soon)* | Stable networking — ClusterIP, NodePort, LoadBalancer |
-| 05 | **ConfigMaps** *(coming soon)* | Externalise configuration from container images |
-| 06 | **Secrets** *(coming soon)* | Manage sensitive data the Kubernetes way |
+| 03 | **Deployments** | Declarative rollouts, scaling, rollbacks, self-healing |
+| 04 | **ReplicaSets** | Reconciliation loop, label selectors, desired vs actual state |
+| 05 | **DaemonSets** | Node-level workloads — one pod per node, guaranteed |
+| 06 | **Jobs** | Run-to-completion tasks, retry logic, parallel execution |
+| 07 | **CronJobs** | Scheduled recurring tasks, concurrency policies, history limits |
 
 ---
 
@@ -24,7 +25,21 @@
 Mastering this lab means you can:
 - Read and write any real-world Kubernetes manifest
 - Understand what happens when a pod crashes, scales, or gets updated
+- Choose the right workload controller for any scenario
 - Speak confidently in interviews about how Kubernetes actually works
+
+---
+
+## Workload Controller — Quick Decision Guide
+
+| Scenario | Use |
+|---|---|
+| Web server / API that must always run | Deployment |
+| Run a script once and exit | Job |
+| Run a backup every night at 2 AM | CronJob |
+| Run one agent on every node (logging, monitoring) | DaemonSet |
+| Manage pod replicas directly (rare) | ReplicaSet |
+| Scope resources and isolate teams/environments | Namespace |
 
 ---
 
@@ -32,110 +47,63 @@ Mastering this lab means you can:
 
 ```
 02-core-workloads/
-├── README.md                  ← you are here
+├── README.md                       ← you are here
 ├── 01-namespace/
-│   └── namespace.yml          ← creates the "nginx" namespace
-└── 02-pods/
-    └── pod.yml                ← deploys an nginx pod into that namespace
+│   ├── namespace.yml
+│   └── README.md
+├── 02-pods/
+│   ├── pod.yml
+│   └── README.md
+├── 03-deployment/
+│   ├── deployment.yml
+│   └── README.md
+├── 04-replicasets/
+│   ├── replicasets.yml
+│   └── README.md
+├── 05-deamonset/
+│   ├── DaemonSet.yml
+│   └── README.md
+├── 06-job/
+│   ├── job.yml
+│   └── README.md
+└── 07-cron-job/
+    ├── cron-job.yml
+    └── README.md
 ```
 
 ---
 
-## 01 — Namespaces
-
-**File:** `01-namespace/namespace.yml`
-
-```yaml
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: nginx
-```
-
-A Namespace is a **virtual cluster inside your cluster**. It lets you:
-- Isolate teams, apps, or environments (`dev`, `staging`, `prod`) on the same cluster
-- Apply resource quotas and RBAC policies per namespace
-- Avoid name collisions — two teams can both have a pod named `api` in different namespaces
-
-```bash
-# Apply the namespace
-kubectl apply -f 01-namespace/namespace.yml
-
-# Verify it exists
-kubectl get namespaces
-```
-
-**Expected output:**
-```
-NAME              STATUS   AGE
-default           Active   ...
-kube-system       Active   ...
-nginx             Active   5s     ← your namespace
-```
-
----
-
-## 02 — Pods
-
-**File:** `02-pods/pod.yml`
-
-```yaml
-kind: Pod
-apiVersion: v1
-metadata:
-  name: nginx-pod
-  namespace: nginx
-spec:
-  containers:
-  - name: nginx
-    image: nginx:latest
-    ports:
-    - containerPort: 80
-```
-
-A Pod is the **smallest deployable unit in Kubernetes**. It wraps one or more containers that share:
-- The same network namespace (same IP address)
-- The same storage volumes
-- The same lifecycle
-
-**Key decisions explained:**
-- `namespace: nginx` — scopes this pod to the namespace we created above, not `default`
-- `image: nginx:latest` — pulls the official nginx image from Docker Hub
-- `containerPort: 80` — documents the port the container listens on (informational, does not expose it externally)
-
-```bash
-# Apply the pod
-kubectl apply -f 02-pods/pod.yml
-
-# Verify the pod is Running
-kubectl get pods -n nginx
-
-# Inspect the pod in detail
-kubectl describe pod nginx-pod -n nginx
-
-# Quick connectivity test
-kubectl port-forward pod/nginx-pod 8080:80 -n nginx
-# then open http://localhost:8080 in your browser
-```
-
-**Expected output:**
-```
-NAME        READY   STATUS    RESTARTS   AGE
-nginx-pod   1/1     Running   0          10s
-```
-
----
-
-## Namespace + Pod — How They Connect
+## The Hierarchy — How Controllers Relate
 
 ```
 Cluster
-└── Namespace: nginx
-    └── Pod: nginx-pod
-        └── Container: nginx (port 80)
+└── Namespace
+    ├── Deployment → ReplicaSet → Pod(s)       ← stateless long-running apps
+    ├── DaemonSet  → Pod (one per node)         ← node-level agents
+    ├── Job        → Pod(s)                     ← run-to-completion tasks
+    └── CronJob    → Job → Pod(s)               ← scheduled recurring tasks
 ```
 
-The `namespace: nginx` field in `pod.yml` is what ties the two manifests together. Without the namespace existing first, the pod apply would fail.
+> 💡 You almost never create bare Pods or ReplicaSets directly in production. Deployments, DaemonSets, Jobs, and CronJobs are the controllers you actually use.
+
+---
+
+## How to Run the Labs
+
+Apply in order — the namespace must exist before any workload inside it:
+
+```bash
+kubectl apply -f 01-namespace/namespace.yml
+kubectl apply -f 02-pods/pod.yml
+kubectl apply -f 03-deployment/deployment.yml
+kubectl apply -f 04-replicasets/replicasets.yml
+kubectl apply -f 05-deamonset/DaemonSet.yml
+kubectl apply -f 06-job/job.yml
+kubectl apply -f 07-cron-job/cron-job.yml
+
+# Verify everything
+kubectl get all -n nginx
+```
 
 ---
 
@@ -143,27 +111,54 @@ The `namespace: nginx` field in `pod.yml` is what ties the two manifests togethe
 
 | Concept | One-liner |
 |---|---|
-| Pod vs Container | A pod is a wrapper around containers — it adds networking and storage context |
-| Why not deploy bare pods? | Pods don't self-heal. If a node dies, the pod is gone. Deployments fix this |
-| Namespace isolation | Resources in different namespaces can't reference each other by short name |
-| `containerPort` | Purely informational — it does NOT expose the port. A Service does that |
+| Pod vs Container | A pod wraps containers and adds shared networking and storage |
+| Why not bare Pods? | Pods don't self-heal — always use a controller on top |
+| Deployment vs ReplicaSet | Deployment manages rolling updates and rollbacks; ReplicaSet just maintains replica count |
+| DaemonSet vs ReplicaSet | DaemonSet guarantees one pod per node; ReplicaSet places N pods wherever the scheduler decides |
+| Job vs Deployment | Job runs to completion and stops; Deployment runs forever |
+| CronJob vs Job | CronJob creates a new Job on a schedule; Job runs once |
+| `restartPolicy: Always` | Only valid in Deployments/ReplicaSets/DaemonSets — not in Jobs or CronJobs |
+| `batch/v1` vs `apps/v1` | Jobs and CronJobs are in `batch/v1`; Deployments, ReplicaSets, DaemonSets are in `apps/v1` |
 
 ---
 
 ## Useful Commands
 
 ```bash
-# Namespace operations
+# See all workloads in the namespace at once
+kubectl get all -n nginx
+
+# Namespace
 kubectl get namespaces
 kubectl describe namespace nginx
-kubectl delete namespace nginx          # also deletes everything inside it
 
-# Pod operations
+# Pods
 kubectl get pods -n nginx
-kubectl describe pod nginx-pod -n nginx
-kubectl logs nginx-pod -n nginx
-kubectl exec -it nginx-pod -n nginx -- /bin/bash
-kubectl delete pod nginx-pod -n nginx
+kubectl describe pod <pod-name> -n nginx
+kubectl logs <pod-name> -n nginx
+
+# Deployment
+kubectl get deployments -n nginx
+kubectl rollout status deployment/<name> -n nginx
+kubectl rollout undo deployment/<name> -n nginx
+
+# ReplicaSet
+kubectl get replicasets -n nginx
+
+# DaemonSet
+kubectl get daemonsets -n nginx
+
+# Job
+kubectl get jobs -n nginx
+kubectl logs <job-pod-name> -n nginx
+
+# CronJob
+kubectl get cronjobs -n nginx
+kubectl patch cronjob <name> -n nginx -p '{"spec":{"suspend":true}}'   # pause
+kubectl create job manual-run --from=cronjob/<name> -n nginx           # trigger manually
+
+# Cleanup
+kubectl delete namespace nginx   # deletes everything inside it
 ```
 
 ---
@@ -171,22 +166,18 @@ kubectl delete pod nginx-pod -n nginx
 ## What I Learned
 
 - A Namespace is not just a folder — it's a security and resource boundary
-- Pods are ephemeral by design; production workloads always use a controller (Deployment, StatefulSet, etc.) on top
-- `kubectl describe` is your best debugging tool — it shows events, resource limits, and scheduling decisions
-- Applying manifests in order matters: namespace first, then the resources that live inside it
-
----
-
-## What's Next
-
-The next sections will build on this foundation:
-- **Deployments** — wrap pods with self-healing, rolling updates, and replica management
-- **Services** — give pods a stable network identity so other workloads can reach them
-- **ConfigMaps & Secrets** — decouple configuration and credentials from your container images
+- Pods are ephemeral by design; production workloads always use a controller on top
+- Deployments are the standard for stateless apps — they own a ReplicaSet and manage rollouts
+- ReplicaSets are the engine behind Deployments, but you rarely interact with them directly
+- DaemonSets are the right tool when the workload is node-scoped, not app-scoped
+- Jobs are for tasks with a defined end — they track completions, not uptime
+- CronJobs are schedulers, not workloads — the hierarchy is `CronJob → Job → Pod`
+- `kubectl describe` is your best debugging tool across every resource type
 
 ---
 
 ## Author
+
 **[Himanshu Kumar](https://www.linkedin.com/in/h1manshu-kumar/)** - Learning by building, documenting, and sharing 🚀
 
 ---
