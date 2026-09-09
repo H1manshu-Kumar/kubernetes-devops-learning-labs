@@ -206,11 +206,10 @@ Create a PVC that requests this PV:
 
 ```yaml
 # 02-persistentVolumeClaim.yml
-apiVersion: v1
 kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
   name: local-pvc
-  namespace: default
 spec:
   accessModes:
     - ReadWriteOnce
@@ -477,8 +476,9 @@ Container Storage Interface (CSI) is a standard for exposing storage systems to 
 
 ```
 01-persistentVolume/
-├── 01-persistentVolume.yml   ← PV manifest (hostPath, 1Gi, ReadWriteOnce, Retain)
-└── README.md                 ← This file
+├── 01-persistentVolume.yml      ← PV manifest (hostPath, 1Gi, ReadWriteOnce, Retain)
+├── 02-persistentVolumeClaim.yml ← PVC manifest (requests 1Gi, ReadWriteOnce, local-storage)
+└── README.md                    ← This file
 ```
 
 ---
