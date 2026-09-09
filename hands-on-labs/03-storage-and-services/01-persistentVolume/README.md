@@ -50,10 +50,10 @@ Kubernetes separates storage into two objects:
 │                    Kubernetes Cluster                       │
 │                                                             │
 │  Admin creates:          Developer creates:                 │
-│  ┌─────────────┐         ┌─────────────┐                   │
+│  ┌─────────────┐         ┌─────────────┐                    │
 │  │     PV      │◄────────│     PVC     │◄──── Pod uses PVC  │
-│  │  (storage)  │  bound  │  (request)  │                   │
-│  └─────────────┘         └─────────────┘                   │
+│  │  (storage)  │  bound  │  (request)  │                    │
+│  └─────────────┘         └─────────────┘                    │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -160,6 +160,8 @@ echo "Hello from PersistentVolume" | sudo tee /mnt/data/index.html
 # Exit minikube ssh
 exit
 ```
+<img width="329" height="99" alt="image" src="https://github.com/user-attachments/assets/ad25729e-e338-4aac-9de5-2d8c0702f878" /> </br>
+<img width="355" height="43" alt="image" src="https://github.com/user-attachments/assets/77e60e4b-fd82-449a-b126-a99e8aea05e3" />
 
 ---
 
@@ -168,6 +170,7 @@ exit
 ```bash
 kubectl apply -f 01-persistentVolume.yml
 ```
+<img width="636" height="44" alt="image" src="https://github.com/user-attachments/assets/c85fd008-e957-4bc8-b5c4-54a5a3af5904" />
 
 ---
 
@@ -176,6 +179,8 @@ kubectl apply -f 01-persistentVolume.yml
 ```bash
 kubectl get pv
 ```
+<img width="1266" height="99" alt="image" src="https://github.com/user-attachments/assets/67abb08f-614f-481f-8590-39202c9c8c00" />
+
 
 Expected output:
 ```
@@ -197,6 +202,8 @@ In the `describe` output, pay attention to:
 - `Status` — `Available` means no PVC is bound yet
 - `Claim` — empty until a PVC binds to it
 - `Source` — shows the `hostPath` path on the node
+
+<img width="592" height="361" alt="image" src="https://github.com/user-attachments/assets/e8b46c6c-1532-470f-84ae-e231b6fc7310" />
 
 ---
 
@@ -223,6 +230,11 @@ spec:
 kubectl apply -f 02-persistentVolumeClaim.yml
 kubectl get pvc
 ```
+<img width="681" height="41" alt="image" src="https://github.com/user-attachments/assets/f742ff00-fa00-4ec9-b4ad-89d62f2c759a" />    
+
+
+<img width="1024" height="63" alt="image" src="https://github.com/user-attachments/assets/e312aab9-4041-4de6-998a-acbc9e54a150" />
+
 
 Expected output:
 ```
@@ -260,6 +272,8 @@ spec:
 kubectl apply -f 03-pod.yml
 kubectl get pod pv-test-pod
 ```
+<img width="502" height="43" alt="image" src="https://github.com/user-attachments/assets/77a8a6ea-0f1c-43c3-8152-019d44b1b9ff" /> </br>
+<img width="499" height="63" alt="image" src="https://github.com/user-attachments/assets/3968ea7d-726c-484d-a7c1-65156c4b47f9" />
 
 ---
 
