@@ -288,6 +288,8 @@ Expected output:
 ```
 Hello from PersistentVolume
 ```
+<img width="689" height="59" alt="image" src="https://github.com/user-attachments/assets/161cadd5-11bb-406e-9c61-876b5b3b54ea" />
+</br>
 
 Now delete the pod and recreate it — the data should still be there:
 
@@ -296,6 +298,13 @@ kubectl delete pod pv-test-pod
 kubectl apply -f 03-pod.yml
 kubectl exec -it pv-test-pod -- cat /usr/share/nginx/html/index.html
 ```
+<img width="532" height="44" alt="image" src="https://github.com/user-attachments/assets/f3dc918c-c82e-4473-a2f5-7be55822e9e1" /> </br>
+
+<img width="532" height="44" alt="image" src="https://github.com/user-attachments/assets/b8b5afb5-4f5a-4c0f-b155-cbe5efa4ebb4" /> </br>
+
+<img width="532" height="61" alt="image" src="https://github.com/user-attachments/assets/76010058-4a6f-4c75-8210-2569bee2330a" />
+
+
 
 > 💡 The data persists because it lives on the host filesystem (`/mnt/data`), not inside the container. The pod is ephemeral; the PV is not.
 
