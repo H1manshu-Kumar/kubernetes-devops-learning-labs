@@ -310,7 +310,36 @@ kubectl exec -it pv-test-pod -- cat /usr/share/nginx/html/index.html
 
 ---
 
-### Step 7 — Observe the Reclaim Policy in Action
+### Step 7 — Expose the Pod via a Service
+
+```bash
+kubectl apply -f 04-service.yml
+kubectl get svc nginx-service
+```
+
+Expected output:
+```
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+nginx-service   ClusterIP   10.96.x.x       <none>        89/TCP    3s
+```
+
+The service selects the pod via `app: nginx` label and forwards traffic from port `89` to the container's port `80`.
+
+```bash
+# Access the nginx page served from the PV-backed storage
+kubectl run curl-test --image=curlimages/curl --restart=Never --rm -it -- curl http://nginx-service:89
+```
+
+Expected output:
+```
+Hello from PersistentVolume
+```
+
+> 💡 The pod is not accessed directly — the Service acts as a stable endpoint. Even if the pod is replaced, the Service keeps routing to the new pod as long as the label matches.
+
+---
+
+### Step 8 — Observe the Reclaim Policy in Action
 
 Delete the PVC and observe what happens to the PV:
 
@@ -330,7 +359,7 @@ local-pv   1Gi        RWO            Retain           Released   local-storage  
 
 ---
 
-### Step 8 — Clean Up
+### Step 9 — Clean Up
 
 ```bash
 kubectl delete pod pv-test-pod
@@ -501,6 +530,8 @@ Container Storage Interface (CSI) is a standard for exposing storage systems to 
 01-persistentVolume/
 ├── 01-persistentVolume.yml      ← PV manifest (hostPath, 1Gi, ReadWriteOnce, Retain)
 ├── 02-persistentVolumeClaim.yml ← PVC manifest (requests 1Gi, ReadWriteOnce, local-storage)
+├── 03-pod.yml                   ← Pod manifest (nginx, mounts PVC at /usr/share/nginx/html)
+├── 04-service.yml               ← ClusterIP Service (port 89 → container port 80)
 └── README.md                    ← This file
 ```
 
