@@ -3,6 +3,8 @@ kind: Pod
 metadata:
   name: pv-test-pod
   namespace: default
+  labels:
+    app: nginx
 spec:
   containers:
     - name: nginx
@@ -10,6 +12,8 @@ spec:
       volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: local-storage
+      ports:
+        - containerPort: 89
   volumes:
     - name: local-storage
       persistentVolumeClaim:
