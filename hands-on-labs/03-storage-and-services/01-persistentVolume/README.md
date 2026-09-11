@@ -322,6 +322,9 @@ Expected output:
 NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 nginx-service   ClusterIP   10.96.x.x       <none>        89/TCP    3s
 ```
+<img width="534" height="43" alt="image" src="https://github.com/user-attachments/assets/7bd29605-016d-4d70-a82b-32b9ae18542a" /> </br>
+
+<img width="719" height="62" alt="image" src="https://github.com/user-attachments/assets/5cecb104-46d3-4134-8106-2068566c8ea9" />
 
 The service selects the pod via `app: nginx` label and forwards traffic from port `89` to the container's port `80`.
 
@@ -334,6 +337,8 @@ Expected output:
 ```
 Hello from PersistentVolume
 ```
+<img width="591" height="122" alt="image" src="https://github.com/user-attachments/assets/a750e494-c1e1-4f88-a797-4e8d53b16a6e" />
+
 
 > 💡 The pod is not accessed directly — the Service acts as a stable endpoint. Even if the pod is replaced, the Service keeps routing to the new pod as long as the label matches.
 
