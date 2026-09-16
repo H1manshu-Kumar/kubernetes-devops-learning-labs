@@ -1,9 +1,9 @@
 # 🐍 Django Notes App — Kubernetes Mini POC
 
-> **Lab Series:** Storage & Services → 05 Django Mini POC Project
-> **Difficulty:** Beginner → Intermediate
-> **Estimated Time:** 20–30 minutes
-> **Focus:** Deploy a real Django application on Kubernetes using Namespace, Deployment, and Service
+> **Lab Series:** Storage & Services → 05 Django Mini POC Project    
+> **Difficulty:** Beginner → Intermediate    
+> **Estimated Time:** 20–30 minutes    
+> **Focus:** Deploy a real Django application on Kubernetes using Namespace, Deployment, and Service    
 
 ---
 
@@ -171,6 +171,9 @@ Expected output:
 NAME        STATUS   AGE
 notes-app   Active   3s
 ```
+<img width="598" height="47" alt="image" src="https://github.com/user-attachments/assets/994f4cda-d3de-4545-b132-ba4ba0551d04" />
+
+<img width="613" height="58" alt="image" src="https://github.com/user-attachments/assets/d77f10b3-0553-4e82-8266-1272db417120" />
 
 ---
 
@@ -186,11 +189,15 @@ Expected output:
 NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
 notes-app-deployment     1/1     1            1           10s
 ```
+<img width="615" height="44" alt="image" src="https://github.com/user-attachments/assets/522e57f4-99de-4f31-bedc-953a73f2a400" /> </br>
+
+<img width="652" height="59" alt="image" src="https://github.com/user-attachments/assets/1b0e62b9-c381-4ce2-88e7-7adf167c9c1b" />
 
 Check the pod:
 ```bash
 kubectl get pods -n notes-app
 ```
+<img width="779" height="60" alt="image" src="https://github.com/user-attachments/assets/dd795fc6-bfba-4668-a11d-f806bc7bac10" />
 
 Expected output:
 ```
@@ -208,13 +215,13 @@ notes-app-deployment-xxxxxxxxx-xxxxx    1/1     Running   0          15s
 kubectl apply -f service.yml
 kubectl get svc -n notes-app
 ```
+<img width="779" height="60" alt="image" src="https://github.com/user-attachments/assets/3feda843-8232-4de2-be61-8ebca09c5acf" />
 
 Expected output:
 ```
 NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 notes-app-service    ClusterIP   10.96.x.x       <none>        8000/TCP   5s
 ```
-
 ---
 
 ### Step 4 — Verify the App is Reachable
@@ -235,8 +242,11 @@ Or use port-forward to access it from your local machine:
 ```bash
 kubectl port-forward svc/notes-app-service 8000:8000 -n notes-app
 ```
+<img width="1172" height="121" alt="image" src="https://github.com/user-attachments/assets/79b0c327-90be-4d92-b692-6ed34832e955" /> </br>
 
 Then open `http://localhost:8000` in your browser.
+
+<img width="1279" height="730" alt="image" src="https://github.com/user-attachments/assets/bbb08354-497a-4213-8fc5-06f3a2f1a663" />
 
 ---
 
@@ -254,6 +264,7 @@ kubectl exec -it -n notes-app \
   $(kubectl get pod -n notes-app -l app=notes-app -o jsonpath='{.items[0].metadata.name}') \
   -- /bin/sh
 ```
+<img width="1279" height="649" alt="image" src="https://github.com/user-attachments/assets/70fd66aa-f6ec-49ba-bec8-99446075d370" />    
 
 ---
 
@@ -263,6 +274,9 @@ kubectl exec -it -n notes-app \
 kubectl scale deployment notes-app-deployment --replicas=3 -n notes-app
 kubectl get pods -n notes-app
 ```
+<img width="1020" height="42" alt="image" src="https://github.com/user-attachments/assets/f5341ee5-205a-4dc7-a55f-1388c41f907e" /> </br>
+
+<img width="873" height="97" alt="image" src="https://github.com/user-attachments/assets/ff735e26-750b-43d3-9fb6-07e1b1252ed6" />
 
 Expected output:
 ```
@@ -278,6 +292,10 @@ Scale back down:
 ```bash
 kubectl scale deployment notes-app-deployment --replicas=1 -n notes-app
 ```
+<img width="1013" height="45" alt="image" src="https://github.com/user-attachments/assets/54c35485-43ea-4f5d-8c8e-a065a97f000f" /> </br>
+
+<img width="816" height="100" alt="image" src="https://github.com/user-attachments/assets/5758d379-40e8-45c3-b007-e615cb102b09" />
+
 
 ---
 
