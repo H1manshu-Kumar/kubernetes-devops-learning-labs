@@ -1,4 +1,4 @@
-# Lab 01 — Kubernetes Cluster Setup with KIND
+# Lab 01 - Kubernetes Cluster Setup with KIND
 
 > **Week 1 · Day 3** | Setting up a local multi-node Kubernetes cluster using KIND (Kubernetes IN Docker)
 
@@ -49,7 +49,7 @@ KIND runs each Kubernetes node as a **Docker container** on your machine — no 
 
 ---
 
-## Step 1 — Install Docker, KIND & kubectl
+## Step 1 - Install Docker, KIND & kubectl
 
 A single script handles everything. It detects your CPU architecture (x86_64 / arm64) and skips tools already installed.
 
