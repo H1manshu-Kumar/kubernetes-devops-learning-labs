@@ -11,7 +11,7 @@
 
 ## 🎯 Mission Statement
 
-**Fast-track Kubernetes mastery**: From zero Docker/K8s knowledge to job-ready DevOps engineer in **9 weeks**.  
+**Fast-track Kubernetes mastery**: From zero Docker and K8s knowledge to job-ready DevOps engineer in **9 weeks**.  
 Self-paced, hands-on labs with production-grade microservices project. Designed for **QA engineers transitioning to DevOps** (but works for anyone).
 
 > This repo demonstrates a **structured, interview-sharp learning methodology**—exactly what DevOps hiring teams want to see.
