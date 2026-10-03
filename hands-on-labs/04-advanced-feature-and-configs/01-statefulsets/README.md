@@ -290,6 +290,7 @@ Verify:
 ```bash
 kubectl get namespace mysql
 ```
+<img width="362" height="179" alt="image" src="https://github.com/user-attachments/assets/7c07b04c-6aaa-4ef9-97a6-e144ce0c8c67" />
 
 ---
 
