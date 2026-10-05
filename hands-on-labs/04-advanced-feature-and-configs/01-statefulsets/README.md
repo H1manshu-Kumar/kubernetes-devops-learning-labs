@@ -314,6 +314,7 @@ Verify:
 ```bash
 kubectl get secret,configmap -n mysql
 ```
+<img width="612" height="135" alt="image" src="https://github.com/user-attachments/assets/a4ecba88-9c09-419e-93f9-6ffaf7a909a0" />
 
 ---
 
@@ -324,11 +325,13 @@ The Service must exist before the StatefulSet — pods register their DNS entrie
 ```bash
 kubectl apply -f mysql/service.yml
 ```
+<img width="535" height="47" alt="image" src="https://github.com/user-attachments/assets/5e190df0-61e0-495e-b5b8-e3f947383432" />
 
 Verify:
 ```bash
 kubectl get service -n mysql
 ```
+<img width="708" height="60" alt="image" src="https://github.com/user-attachments/assets/c5f4041d-bc0b-470c-9dc6-7d14d49f7e92" />
 
 Expected output — note `CLUSTER-IP` is `None`:
 ```
@@ -343,6 +346,7 @@ mysql-service   ClusterIP   None         <none>        3306/TCP   5s
 ```bash
 kubectl apply -f mysql/statefulset.yml
 ```
+<img width="573" height="62" alt="image" src="https://github.com/user-attachments/assets/4fe93c0e-119a-4c06-81e3-6b23e179adac" />
 
 ---
 
@@ -370,6 +374,11 @@ mysql-statefulset-0     1/1     Running   0          30s
 NAME                                   STATUS   VOLUME     CAPACITY   ACCESS MODES
 mysql-data-mysql-statefulset-0         Bound    pvc-xxx    1Gi        RWO
 ```
+<img width="576" height="61" alt="image" src="https://github.com/user-attachments/assets/e1fd38fc-6aab-4495-86e1-2773be325641" /> </br>
+
+<img width="582" height="61" alt="image" src="https://github.com/user-attachments/assets/12734272-6da6-426f-87fa-e048846082f1" /> </br>
+
+<img width="1254" height="100" alt="image" src="https://github.com/user-attachments/assets/b4894455-be29-4918-9d70-62b479033a18" />
 
 > 💡 The PVC name follows the pattern: `<volumeClaimTemplate-name>-<pod-name>` → `mysql-data-mysql-statefulset-0`. This naming is automatic and deterministic.
 
@@ -384,6 +393,9 @@ kubectl describe statefulset mysql-statefulset -n mysql
 # See which node the pod landed on
 kubectl get pods -n mysql -o wide
 ```
+<img width="1120" height="674" alt="image" src="https://github.com/user-attachments/assets/0d2914d1-b51f-48d0-a09d-532e4d412157" /> </br>
+
+<img width="1267" height="83" alt="image" src="https://github.com/user-attachments/assets/a5256722-377b-41b8-89cb-9c9a9a15344a" /> </br>
 
 ---
 
@@ -398,12 +410,15 @@ kubectl delete pod mysql-statefulset-0 -n mysql
 # Watch it get recreated with the same name
 kubectl get pods -n mysql -w
 ```
+<img width="814" height="43" alt="image" src="https://github.com/user-attachments/assets/23e49c1b-a6da-4f00-9a81-67bf03148928" />
+<img width="1248" height="62" alt="image" src="https://github.com/user-attachments/assets/79a5634c-b1e8-41fa-89a1-72e651cfe77b" />
 
 After recreation:
 ```bash
 # The PVC is still there — data is preserved
 kubectl get pvc -n mysql
 ```
+<img width="1238" height="96" alt="image" src="https://github.com/user-attachments/assets/bb664a32-5aa5-425c-9b62-cd375d417fbf" />
 
 > 💡 This is the core value of a StatefulSet. The pod comes back as `mysql-statefulset-0` (not a random name) and reattaches to `mysql-data-mysql-statefulset-0` (its original PVC). Data survives the pod restart.
 
