@@ -455,8 +455,12 @@ mysql-data-mysql-statefulset-2   Bound   1Gi
 kubectl exec -it mysql-statefulset-0 -n mysql -- bash
 
 # Inside the pod — resolve its own stable DNS name
-nslookup mysql-statefulset-0.mysql-service.mysql.svc.cluster.local
+getent hosts mysql-statefulset-0.mysql-service.mysql.svc.cluster.local
+
 ```
+<img width="860" height="51" alt="image" src="https://github.com/user-attachments/assets/d7d2d614-9c8b-4810-8638-d2a7740d1e8c" />
+
+<img width="940" height="39" alt="image" src="https://github.com/user-attachments/assets/257fa46f-d6cc-4935-bf62-fda13244f396" />
 
 > 💡 This DNS name is stable. Even if the pod is rescheduled to a different node with a different IP, this DNS name will resolve to the new IP. Other services can always reach this pod by name.
 
@@ -667,15 +671,6 @@ A StatefulSet runs a specified number of pods with stable identities and storage
 ```
 namespace.yml → Secret + ConfigMap → service.yml → statefulset.yml
 ```
-
----
-
-## What's Next
-
-- **ConfigMaps & Secrets** — Externalize configuration and sensitive data (already used in this lab)
-- **Persistent Volumes & Storage Classes** — Understand how PVCs bind to PVs and how StorageClasses provision storage dynamically
-- **DaemonSets** — Run one pod per node for cluster-level agents
-- **MySQL Replication on Kubernetes** — Use a StatefulSet with init containers to set up a proper primary/replica MySQL cluster
 
 ---
 
