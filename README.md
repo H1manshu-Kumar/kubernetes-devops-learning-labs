@@ -193,7 +193,7 @@ Each phase has dedicated `interview-prep/` folder with:
 Structured branching strategy mirrors professional workflows:
 - `phase/*` branches = active learning
 - `lab/*` branches = completed labs
-- Clean commit history = demonstrates learning progression
+- Clean commit history = demonstrates learning progression.
 
 ### **6. Multi-Environment Learning**
 - **Local**: Minikube (quick, safe)
