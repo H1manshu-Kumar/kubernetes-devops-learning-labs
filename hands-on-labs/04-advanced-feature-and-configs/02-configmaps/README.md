@@ -468,6 +468,6 @@ No. ConfigMaps and Secrets are namespace-scoped. A Pod can only reference Config
 <div align="center">
 
 **Built while learning Kubernetes hands-on.**
-*The best way to understand ConfigMaps and Secrets is to break a pod by deleting one, then fix it — and understand why it failed.*
+*The best way to understand ConfigMaps and Secrets is to break a pod by deleting one, then fix it - and understand why it failed.*
 
 </div>
