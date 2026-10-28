@@ -19,7 +19,6 @@
 8. [StatefulSets in Production — What Changes](#statefulsets-in-production--what-changes)
 9. [Interview Q&A — Straight to the Point](#interview-qa--straight-to-the-point)
 10. [Common Mistakes & Gotchas](#common-mistakes--gotchas)
-11. [What's Next](#whats-next)
 
 ---
 
