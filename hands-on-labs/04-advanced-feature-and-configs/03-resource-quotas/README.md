@@ -245,6 +245,7 @@ spec:
 ```bash
 kubectl apply -f resource-quota.yml
 ```
+<img width="652" height="102" alt="image" src="https://github.com/user-attachments/assets/90e961ad-5b71-4fe3-939b-e4d55277114a" />
 
 Expected output:
 ```
@@ -277,6 +278,9 @@ requests.cpu            100m    500m
 requests.memory         128Mi   512Mi
 ...
 ```
+<img width="1270" height="101" alt="image" src="https://github.com/user-attachments/assets/184faa25-c8df-4738-a8f8-b4665ac4e40f" />
+
+<img width="852" height="269" alt="image" src="https://github.com/user-attachments/assets/3a731338-8013-4cc0-a046-09f33c23c329" />
 
 > 💡 Watch the `Used` column — it updates in real time as you create and delete pods.
 
@@ -296,6 +300,7 @@ Type        Resource  Min   Max    Default Request  Default Limit
 Container   cpu       50m   500m   100m             200m
 Container   memory    64Mi  512Mi  128Mi            256Mi
 ```
+<img width="918" height="140" alt="image" src="https://github.com/user-attachments/assets/2d96a1ca-4148-4565-a0ef-7a37cd46ff0e" />
 
 ---
 
@@ -305,6 +310,9 @@ Container   memory    64Mi  512Mi  128Mi            256Mi
 kubectl run no-resources-pod --image=nginx:1.25.3 -n quota-demo
 kubectl get pod no-resources-pod -n quota-demo -o jsonpath='{.spec.containers[0].resources}'
 ```
+<img width="936" height="47" alt="image" src="https://github.com/user-attachments/assets/92790ccf-e922-4f66-b159-1e55986836ed" />
+
+<img width="1205" height="43" alt="image" src="https://github.com/user-attachments/assets/ace6b872-4164-47a9-87e2-05601e83676c" />
 
 Even though you didn't specify `resources`, the LimitRange injected defaults. The pod was admitted because it now has valid requests/limits.
 
@@ -324,6 +332,8 @@ The 6th pod (you already have `quota-compliant-pod` and `no-resources-pod`) will
 Error from server (Forbidden): pods "test-pod-5" is forbidden:
 exceeded quota: demo-quota, requested: pods=1, used: pods=5, limited: pods=5
 ```
+<img width="1269" height="212" alt="image" src="https://github.com/user-attachments/assets/3ca5ba9b-8c5a-46ca-ac7d-b1dd988ef930" />
+
 
 > 💡 This is the core behavior of ResourceQuota — hard enforcement at admission time with a clear error message.
 
@@ -342,6 +352,7 @@ If the namespace has already consumed enough CPU requests, this will be rejected
 Error from server (Forbidden): pods "cpu-hog" is forbidden:
 exceeded quota: demo-quota, requested: requests.cpu=450m, used: requests.cpu=100m, limited: requests.cpu=500m
 ```
+<img width="1269" height="115" alt="image" src="https://github.com/user-attachments/assets/243e49eb-f0ce-4472-b312-51444bf63301" />
 
 ---
 
@@ -357,6 +368,7 @@ kubectl run limit-violator --image=nginx:1.25.3 -n quota-demo \
 Error from server (Forbidden): pods "limit-violator" is forbidden:
 [maximum cpu usage per Container is 500m, but limit is 600m]
 ```
+<img width="1269" height="80" alt="image" src="https://github.com/user-attachments/assets/575e0128-01bc-433c-9437-a77c08530b6a" />
 
 > 💡 Notice this error comes from LimitRange, not ResourceQuota — it's rejected before quota is even checked.
 
@@ -367,6 +379,9 @@ Error from server (Forbidden): pods "limit-violator" is forbidden:
 ```bash
 kubectl get resourcequota demo-quota -n quota-demo -o yaml
 ```
+<img width="1265" height="479" alt="image" src="https://github.com/user-attachments/assets/45062a2d-3fa8-4fe4-b3a9-b3a152aca821" />
+
+<img width="1262" height="401" alt="image" src="https://github.com/user-attachments/assets/1690c158-5850-4d14-8b40-7737a1f2e2fa" />
 
 The `status.used` section shows real-time consumption:
 ```yaml
@@ -386,6 +401,7 @@ status:
 ```bash
 kubectl delete namespace quota-demo
 ```
+<img width="1262" height="47" alt="image" src="https://github.com/user-attachments/assets/94ea4193-d5de-4f99-bd57-b2cf7fdac30a" />
 
 Deleting the namespace removes the ResourceQuota, LimitRange, and all pods inside it.
 
@@ -533,15 +549,6 @@ It is deleted along with everything else in the namespace. ResourceQuota is a na
 ├── resource-quota.yml  ← Namespace + ResourceQuota + LimitRange + compliant Pod
 └── README.md           ← This file
 ```
-
----
-
-## What's Next
-
-- **LimitRange deep dive** — explore `type: Pod` and `type: PersistentVolumeClaim` limits
-- **Priority Classes** — combine with ResourceQuota scopes (`scopeSelector`) to give different quotas to different pod priority levels
-- **Namespace-level network policies** — pair quotas with NetworkPolicy for full namespace isolation
-- **Monitoring** — set up Prometheus alerts on `kube_resourcequota_used / kube_resourcequota_hard > 0.8` to catch teams approaching their limits
 
 ---
 
