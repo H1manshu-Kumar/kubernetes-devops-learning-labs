@@ -273,6 +273,7 @@ spec:
 ```bash
 kubectl create namespace probes-demo
 ```
+<img width="618" height="39" alt="image" src="https://github.com/user-attachments/assets/8da2aa10-d31e-45f9-ac7b-21534035b7b2" />
 
 ---
 
@@ -281,12 +282,14 @@ kubectl create namespace probes-demo
 ```bash
 kubectl apply -f liveness-probe.yml
 ```
+<img width="589" height="38" alt="image" src="https://github.com/user-attachments/assets/620d16b2-f44e-45a8-8eb6-0a3e1aa622a9" />
 
 Watch the pod come up:
 
 ```bash
 kubectl get pod liveness-probe-demo -n probes-demo -w
 ```
+<img width="710" height="57" alt="image" src="https://github.com/user-attachments/assets/ada7e8bd-1d8f-430d-966d-0cb85b240ae3" />
 
 Expected: pod reaches `Running` state with `READY 1/1`.
 
@@ -303,6 +306,9 @@ Look for the `Liveness` line in the container section:
 ```
 Liveness:  http-get http://:80/ delay=5s timeout=1s period=10s #success=1 #failure=3
 ```
+<img width="1168" height="535" alt="image" src="https://github.com/user-attachments/assets/3d690723-4ca8-4123-8a42-13bae963270c" />
+
+<img width="1280" height="154" alt="image" src="https://github.com/user-attachments/assets/f0c3ad27-a505-472f-a844-5bf18a2a8b14" />
 
 Also check the `Events` section at the bottom — this is where probe failures and restarts are logged.
 
@@ -316,7 +322,6 @@ Break nginx by removing its index file, causing it to return 404 (which is still
 # Kill the nginx master process inside the container
 kubectl exec liveness-probe-demo -n probes-demo -- kill 1
 ```
-
 Watch the pod restart:
 
 ```bash
@@ -354,6 +359,7 @@ Look for:
 ```
 Readiness:  http-get http://:80/ delay=3s timeout=1s period=5s #success=1 #failure=3
 ```
+<img width="1155" height="535" alt="image" src="https://github.com/user-attachments/assets/97b25b47-953a-4347-aed2-7c6d3f30ea88" />
 
 ---
 
@@ -402,6 +408,8 @@ kubectl describe pod startup-probe-demo -n probes-demo
 
 Look for both `Startup` and `Liveness` entries in the container description. Notice that liveness only activates after startup succeeds.
 
+<img width="1160" height="556" alt="image" src="https://github.com/user-attachments/assets/093f2d0d-9c07-4076-a349-3088556062f8" />
+
 ---
 
 ### Step 8 — Deploy All Three Probes Together
@@ -413,6 +421,7 @@ kubectl apply -f all-probes.yml
 ```bash
 kubectl describe pod all-probes-demo -n probes-demo
 ```
+<img width="929" height="617" alt="image" src="https://github.com/user-attachments/assets/ec946efd-4d1d-4f03-ab12-5468e99d1118" />
 
 You'll see all three probes listed. This is the production-ready pattern.
 
@@ -424,6 +433,7 @@ You'll see all three probes listed. This is the production-ready pattern.
 # See probe failures and restarts in events
 kubectl get events -n probes-demo --sort-by='.lastTimestamp'
 ```
+<img width="1280" height="499" alt="image" src="https://github.com/user-attachments/assets/136813c4-5a4c-4f11-bb70-8359f3099ef8" />
 
 Probe failures appear as events like:
 ```
@@ -438,6 +448,7 @@ Readiness probe failed: HTTP probe failed with statuscode: 404
 ```bash
 kubectl delete namespace probes-demo
 ```
+<img width="579" height="44" alt="image" src="https://github.com/user-attachments/assets/0e9db6d3-6349-4748-8a72-886c1ca8e550" />
 
 ---
 
@@ -558,10 +569,10 @@ Either the container process is crashing (exit code non-zero) or the liveness/st
 
 ```
 04-probes/
-├── liveness-probe.yml   ← Pod with only a livenessProbe (httpGet)
-├── readiness-probe.yml  ← Pod with only a readinessProbe (httpGet)
-├── startup-probe.yml    ← Pod with startupProbe + livenessProbe
-├── all-probes.yml       ← Pod with all three probes (production pattern)
+├── 01-liveness-probe.yml   ← Pod with only a livenessProbe (httpGet)
+├── 02-readiness-probe.yml  ← Pod with only a readinessProbe (httpGet)
+├── 03-startup-probe.yml    ← Pod with startupProbe + livenessProbe
+├── 04-all-probes.yml       ← Pod with all three probes (production pattern)
 └── README.md            ← This file
 ```
 
