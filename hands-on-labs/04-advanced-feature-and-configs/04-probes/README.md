@@ -456,7 +456,7 @@ kubectl delete namespace probes-demo
 
 The manifests in this lab use nginx for simplicity. In production:
 
-1. **Use a dedicated health endpoint** — don't probe `/`. Create `/healthz` (liveness) and `/readyz` (readiness) endpoints in your app that check internal state (DB connection, cache, etc.).
+1. **Use a dedicated health endpoint** — don't probe `/`. Create `/healthz` (liveness) and `/readyz` (readiness) endpoints in your app that check internal state (DB connection, cache, etc.)
 
 2. **Tune `initialDelaySeconds` to your app's actual startup time** — too short and the probe fires before the app is ready; too long and you delay detecting real failures.
 
