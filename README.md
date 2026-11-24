@@ -14,7 +14,7 @@
 **Fast-track Kubernetes mastery**: From zero Docker and K8s knowledge to job-ready DevOps engineer in **9 weeks**.
 Self-paced, hands-on labs with production-grade microservices project. Designed for **QA engineers transitioning to DevOps** (works for anyone).
 
-> This repo demonstrates a **structured, interview-sharp learning methodology**—exactly what DevOps hiring teams want to see.
+> This repo demonstrates a **structured, interview-sharp learning methodology** - exactly what DevOps hiring teams want to see.
 
 ---
 
@@ -45,7 +45,14 @@ Phase 6: CI/CD Integration        → Jenkins → K8s pipelines
 Phase 7: Managed Services         → EKS, AKS, GKE deployment
 ```
 
-**Timeline**: Week 1 → Fundamentals | Week 2-3 → Core | Week 4 → Networking | Week 5 → Production | Week 6-7 → Project | Week 8 → CI/CD | Week 9 → Managed
+**Timeline**:    
+Week 1 → Fundamentals |    
+Week 2-3 → Core |    
+Week 4 → Networking |    
+Week 5 → Production |    
+Week 6-7 → Project |    
+Week 8 → CI/CD |    
+Week 9 → Managed
 
 ---
 
